@@ -62,10 +62,20 @@ function doVendorStuff () {
 
 module.exports.vendorJS = function vendorJS () {
     doVendorStuff() // TODO is this dumb?
+
+    // catchall vendor dir for stuff we can't pull down with bower
+    gulp.src("vendor/js/**/*.js")
+      .pipe(gChmod(664))
+      .pipe(gulp.dest("dist/js/vendor"));
 }
 
 module.exports.vendorCSS = function vendorCSS () {
     doVendorStuff()
+
+    // catchall
+    gulp.src("vendor/css/**/*.css")
+      .pipe(gChmod(664))
+      .pipe(gulp.dest("dist/css/vendor"));
 }
 
 module.exports.componentStylus = function componentStylus (stylusConfig) {
