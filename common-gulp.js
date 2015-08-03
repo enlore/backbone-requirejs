@@ -19,11 +19,7 @@ var gulp            = require("gulp")
   , gRename         = require("gulp-rename")
   , gNodemon        = require("gulp-nodemon")
 
-module.exports.vendorJS = function vendorJS () {
-  gulp.src("vendor/js/**/*.js")
-    .pipe(gChmod(664))
-    .pipe(gulp.dest("dist/js/vendor"));
-
+function doVendorStuff () {
   /*
    * Grab all the stuff pulled in via bower.
    * TODO need to filter for js only, handle the vendor css in yonder vendorCSS
@@ -39,9 +35,17 @@ module.exports.vendorJS = function vendorJS () {
 
       var mainFilePath  = path.join(depPath, mainFileName)
 
-      gulp.src(mainFilePath)
-        .pipe(gChmod(664))
-        .pipe(gulp.dest("dist/js/vendor"))
+
+      if (mainFilePath.search(/\.js$/) > -1) {
+          gulp.src(mainFilePath)
+            .pipe(gChmod(664))
+            .pipe(gulp.dest("dist/js/vendor"))
+
+      } else if (mainFilePath.search(/\.css$/) > -1) {
+          gulp.src(mainFilePath)
+            .pipe(gChmod(664))
+            .pipe(gulp.dest("dist/css/vendor"))
+      }
   }
 
   /*
@@ -56,10 +60,12 @@ module.exports.vendorJS = function vendorJS () {
     .pipe(gulp.dest("dist/js/vendor"))
 }
 
+module.exports.vendorJS = function vendorJS () {
+    doVendorStuff() // TODO is this dumb?
+}
+
 module.exports.vendorCSS = function vendorCSS () {
-  gulp.src("vendor/css/**/*.css")
-    .pipe(gChmod(664))
-    .pipe(gulp.dest("dist/css/vendor"));
+    doVendorStuff()
 }
 
 module.exports.componentStylus = function componentStylus (stylusConfig) {
