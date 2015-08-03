@@ -39,12 +39,12 @@ function doVendorStuff () {
       if (mainFilePath.search(/\.js$/) > -1) {
           gulp.src(mainFilePath)
             .pipe(gChmod(664))
-            .pipe(gulp.dest("dist/js/vendor"))
+            .pipe(gulp.dest("dist/client/js/vendor"))
 
       } else if (mainFilePath.search(/\.css$/) > -1) {
           gulp.src(mainFilePath)
             .pipe(gChmod(664))
-            .pipe(gulp.dest("dist/css/vendor"))
+            .pipe(gulp.dest("dist/client/css/vendor"))
       }
   }
 
@@ -57,7 +57,7 @@ function doVendorStuff () {
   gulp.src("node_modules/jade-runtime/index.js")
     .pipe(gRename("jade-runtime.js"))
     .pipe(gChmod(664))
-    .pipe(gulp.dest("dist/js/vendor"))
+    .pipe(gulp.dest("dist/client/js/vendor"))
 }
 
 module.exports.vendorJS = function vendorJS () {
@@ -66,7 +66,7 @@ module.exports.vendorJS = function vendorJS () {
     // catchall vendor dir for stuff we can't pull down with bower
     gulp.src("vendor/js/**/*.js")
       .pipe(gChmod(664))
-      .pipe(gulp.dest("dist/js/vendor"));
+      .pipe(gulp.dest("dist/client/js/vendor"));
 }
 
 module.exports.vendorCSS = function vendorCSS () {
@@ -75,7 +75,7 @@ module.exports.vendorCSS = function vendorCSS () {
     // catchall
     gulp.src("vendor/css/**/*.css")
       .pipe(gChmod(664))
-      .pipe(gulp.dest("dist/css/vendor"));
+      .pipe(gulp.dest("dist/client/css/vendor"));
 }
 
 module.exports.componentStylus = function componentStylus (stylusConfig) {
@@ -84,13 +84,14 @@ module.exports.componentStylus = function componentStylus (stylusConfig) {
         .pipe(gStylus(stylusConfig))
         .pipe(gConcat("bundle.css"))
         .pipe(gChmod(664))
-        .pipe(gulp.dest("dist/css"));
+        .pipe(gulp.dest("dist/client/css"));
     }
 }
 
 module.exports.nodemonAPI = function nodemonAPI () {
   gNodemon({
-      script: "src/server/api.js",
+      script: "dist/server/api.js",
+      ignore: ["src/client", "node_modules", "bower_components"],
       env: {
         PORT: process.env.PORT || 3000
       }
@@ -108,16 +109,22 @@ module.exports.appTemplatesJade = function appTemplatesJade (jadeConfig) {
             params: ["jade"]
         }))
         .pipe(gChmod(664))
-        .pipe(gulp.dest("dist/js/app/templates"));
+        .pipe(gulp.dest("dist/client/js/app/templates"));
     }
 }
 
 module.exports.appJS = function appJS () {
   gulp.src("src/client/**/*.js")
     .pipe(gChmod(664))
-    .pipe(gulp.dest("dist/js/app"));
+    .pipe(gulp.dest("dist/client/js/app"));
 
   gulp.src("src/client/loadConfig.js")
     .pipe(gChmod(664))
-    .pipe(gulp.dest("dist/js"));
+    .pipe(gulp.dest("dist/client/js"));
+}
+
+module.exports.apiJS = function apiJS () {
+    gulp.src("src/server/**/*.js")
+      .pipe(gChmod(664))
+      .pipe(gulp.dest("dist/server"))
 }
