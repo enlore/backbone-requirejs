@@ -5,6 +5,8 @@
  * There are rather specific to the way I structure and build SPA's.
  */
 
+require("colors")
+
 var path            = require("path")
 
 var gulp            = require("gulp")
