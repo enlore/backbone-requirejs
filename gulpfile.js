@@ -1,6 +1,7 @@
 /* jshint asi: true, laxcomma: true */
-var gulp            = require("gulp")
+require("colors")
 
+var gulp            = require("gulp")
 var commonGulp      = require("./common-gulp")
 
 // Default run list
@@ -11,11 +12,14 @@ var taskList = [
     "appTemplatesJade",
     "appJS",
     "apiJS",
-    "api"
+    "api",
+    "watchers"
 ]
 
 
-gulp.task("default", taskList, function () {
+gulp.task("default", taskList)
+
+gulp.task("watchers", function () {
   gulp.watch(["vendor/js/**/*.js", "bower_components/**/*.js"], ["vendorJS"]);
   gulp.watch(["vendor/css/**/*.css", "bower_components/**/*.css"], ["vendorCSS"]);
   //gulp.watch("src/client/layouts/**/*.jade", ["layouts"]);
@@ -24,6 +28,8 @@ gulp.task("default", taskList, function () {
   //gulp.watch("assets/**", ["assets"]);
   gulp.watch("src/client/**/*.jade", ["appTemplatesJade"]);
   gulp.watch("src/client/index.js", ["appJS"])
+  gulp.watch("src/server/**/*.js", ["apiJS"])
+
 })
 
 gulp.task("api", commonGulp.nodemonAPI)
