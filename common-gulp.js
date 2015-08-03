@@ -70,7 +70,7 @@ module.exports.vendorCSS = function vendorCSS () {
 
 module.exports.componentStylus = function componentStylus (stylusConfig) {
     return function () {
-      gulp.src("src/app/**/*.styl")
+      gulp.src("src/client/**/*.styl")
         .pipe(gStylus(stylusConfig))
         .pipe(gConcat("bundle.css"))
         .pipe(gChmod(664))
@@ -91,7 +91,7 @@ module.exports.nodemonAPI = function nodemonAPI () {
 
 module.exports.appTemplatesJade = function appTemplatesJade (jadeConfig) {
     return function () {
-      gulp.src("src/app/**/*.jade")
+      gulp.src("src/client/**/*.jade")
         .pipe(gJade(jadeConfig))
         .pipe(gWrap({
             deps: ["jade-runtime"],
@@ -103,11 +103,11 @@ module.exports.appTemplatesJade = function appTemplatesJade (jadeConfig) {
 }
 
 module.exports.appJS = function appJS () {
-  gulp.src("src/app/**/*.js")
+  gulp.src("src/client/**/*.js")
     .pipe(gChmod(664))
     .pipe(gulp.dest("dist/js/app"));
 
-  gulp.src("src/loadConfig.js")
+  gulp.src("src/client/loadConfig.js")
     .pipe(gChmod(664))
     .pipe(gulp.dest("dist/js"));
 }
