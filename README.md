@@ -18,6 +18,10 @@ One thing I like about Meteor is how the app is all kept in one place, served ou
 dir.  I dig it.  The client and server are two halves of the same whole.
 
     appRoot
+    |- vendor // catch all dir for dependencies that can't be pulled in with a preferred method
+    |  |- js
+    |  |- css
+    |
     |- src
     |  |- client // client side app code goes here, including componenty styles, templates, etc
     |  |  |- someEntity
