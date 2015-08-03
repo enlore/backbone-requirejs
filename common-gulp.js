@@ -90,7 +90,7 @@ module.exports.componentStylus = function componentStylus (stylusConfig) {
 
 module.exports.nodemonAPI = function nodemonAPI () {
   gNodemon({
-      script: "src/api.js",
+      script: "src/server/api.js",
       env: {
         PORT: process.env.PORT || 3000
       }
