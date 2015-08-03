@@ -19,15 +19,34 @@ dir.  I dig it.  The client and server are two halves of the same whole.
 
     appRoot
     |- src
-       |- client // client side app code goes here, including componenty styles, templates, etc
-       |  |- someEntity
-       |     |- view.js
-       |     |- model.js
-       |     |- collection.js
-       |     |- component.styl
+    |  |- client // client side app code goes here, including componenty styles, templates, etc
+    |  |  |- someEntity
+    |  |     |- view.js
+    |  |     |- model.js
+    |  |     |- collection.js
+    |  |     |- component.styl
+    |  |
+    |  |- server // this is where the api entry point, models, util functions, etc live
+    |     |- api.js
+    |     |- someEntity
+    |        |- model.js
+    |        |- helper.js
+    |        |- router.js
+    |
+    |- dist  // here's where all this crap gets copied, transcompiled, what all
+       |- js
+       |  |- app  // this is where the js and template functions from the client dir end up
+       |  |- vendor
        |
-       |- server // this is where the api entry point, models, util functions, etc live
-          |- someEntity
-             |- model.js
-             |- helper.js
-             |- router.js
+       |- css
+          |- main.css  // all the styles just get gobbled up and crapped out here
+          |- vendor
+
+In development and testing, the server side code will just get run rout out of src. For now.
+
+Probably what oughta happen is that the server side code gets copied over to the dist folder
+for ease of shipment. The idea is that the whole dist folder just gets bundled up and sent
+off.  Granted that makes some assumptions about how the app will be run in deployment.
+
+Further, this directory structure for the server side code may or may not support a distributed
+arch very well. Or it may.  I dunno yet.
